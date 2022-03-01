@@ -1,0 +1,24 @@
+{
+  "name": "kiwi-event",
+  "version": "0.0.1",
+  "description": "A typescript event management library",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/iamiota/kiwi-event.git"
+  },
+  "keywords": [
+    "event",
+    "management",
+    "typescript"
+  ],
+  "author": "Chris Yi",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/iamiota/kiwi-event/issues"
+  },
+  "homepage": "https://github.com/iamiota/kiwi-event#readme"
+}
