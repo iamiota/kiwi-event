@@ -1,34 +1,98 @@
-### A typescript event management library
+# Kiwi Event
+
+A typescript event bus library.
+
+
+
+## Installation
+
+Install through npm:
+
+```
+npm install --save kiwi-event
+```
+
+Install through yarn:
+
+```
+yarn add kiwi-event
+```
+
+
+
+## Usage
 
 ```typescript
 import KiwiEvent from 'kiwi-event'
 
 const $bus = new KiwiEvent()
 
-// Supports multiple listeners for the same event
-const event1 = $bus.on('hello', () => {
+// Register multiple listeners for an event
+const listener1 = $bus.on('hello world', () => {
   console.log('hello world 1')
 })
-
-const event2 = $bus.on('hello', () => {
+const listener2 = $bus.on('hello world', () => {
   console.log('hello world 2')
 })
 
-$bus.emit('hello') // hello world 1 hello world 2
+$bus.emit('hello world')
+// hello world 1
+// hello world 2
 
-// Support for closing a single listener
-$bus.off(event1) 
-$bus.emit('hello') // hello world 2
-$bus.off('hello')
-$bus.emit('hello') //
+// remove a listener
+$bus.off(listener1) 
+$bus.emit('hello world')
+// hello world 2
 
+// remove all listener for an event
+$bus.off('hello world')
 
-// Supports closing multiple events at the same time
-$bus.off(['hello'])
-$bus.off([event1, event2])
-$bus.off(['hello', event1, event2])
+// remove one or multiple events and listeners
+$bus.off(listener1)
+$bus.off('hello world')
+$bus.off([listener1, listener2])
+$bus.off(['hello world', listener1, listener2])
 
-
+// clear all events and listeners
+$bus.clear()
 
 ```
 
+
+
+## methods
+
+### on(event, handler)
+
+- 'event': an event name.
+- 'handler': a callback function.
+
+Register for an event, the return value is a unique key, you could use the ```off``` method to cancel the monitor
+
+***
+
+### emit(event, ...args)
+
+- 'event': an event name.
+- '...args': parameters passed to handler.
+
+Emit an event
+
+***
+
+### off(event)
+
+* 'event': an event name or the return value of the ```on``` method, or an array of them
+
+Remove event listeners
+
+
+
+## Contribution
+Your contributions and suggestions are heartily welcome.
+
+
+
+## License
+
+MIT

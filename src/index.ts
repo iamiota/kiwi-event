@@ -1,10 +1,29 @@
+export type KeyOfMap<M extends Map<unknown, unknown>> = M extends Map<
+  infer K,
+  unknown
+>
+  ? K
+  : never
+
+export type Event = string | symbol
+
+export type Handler = Function
+
+export type Key = symbol
+
+export type EventMap = Map<Event, Key[]>
+
+export type KeyMap = Map<Key, Event>
+
+export type HandlerMap = Map<Key, Handler>
+
 function KiwiEvent() {
-  const eventMap = new Map()
-  const keyMap = new Map()
-  const handlerMap = new Map()
+  const eventMap: EventMap = new Map()
+  const keyMap: KeyMap = new Map()
+  const handlerMap: HandlerMap = new Map()
 
   return {
-    on(event, handler) {
+    on<T extends Event>(event: T, handler: Handler): Key {
       const key = Symbol()
 
       eventMap.set(event, (eventMap.get(event) || []).concat([key]))
@@ -13,20 +32,22 @@ function KiwiEvent() {
 
       return key
     },
-    emit(event, ...args) {
+
+    emit<T extends KeyOfMap<EventMap>>(event: T, ...args): void {
       const events = eventMap.get(event) || []
       const len = events.length
       for (let i = 0; i < len; i++) {
-        handlerMap.get(events[i])(...args)
+        const handler = handlerMap.get(events[i])
+        if (typeof handler === 'function') handler(...args)
       }
     },
-    off(event) {
-      if (event === '*') {
-        eventMap.clear()
-        keyMap.clear()
-        handlerMap.clear()
-        return
-      }
+
+    off<
+      T extends
+        | KeyOfMap<EventMap>
+        | KeyOfMap<KeyMap>
+        | Array<KeyOfMap<EventMap> | KeyOfMap<KeyMap>>
+    >(event: T): void {
       const events = Array.isArray(event) ? event : [event]
       const len = events.length
       for (let i = 0; i < len; i++) {
@@ -41,12 +62,22 @@ function KiwiEvent() {
           eventMap.delete(targetEventKey)
         } else {
           const event = keyMap.get(targetEventKey)
+          if (!event) return
           const eventKeys = eventMap.get(event)
-          eventKeys.splice(eventKeys.findIndex((item) => item === targetEventKey), 1)
+          eventKeys.splice(
+            eventKeys.findIndex((item) => item === targetEventKey),
+            1
+          )
           handlerMap.delete(targetEventKey)
         }
       }
-    }
+    },
+
+    clear(): void {
+      eventMap.clear()
+      keyMap.clear()
+      handlerMap.clear()
+    },
   }
 }
 

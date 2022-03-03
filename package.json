@@ -1,18 +1,25 @@
 {
   "name": "kiwi-event",
-  "version": "0.0.1",
-  "description": "A typescript event management library",
-  "main": "index.js",
+  "version": "0.0.5",
+  "description": "A typescript event bus library",
+  "source": "src/index.ts",
+  "main": "./dist/index.js",
+  "module": "./dist/index.module.js",
+  "unpkg": "./dist/index.umd.js",
+  "exports": {
+    "require": "./dist/index.cjs",
+    "default": "./dist/index.js"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "microbundle"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/iamiota/kiwi-event.git"
   },
   "keywords": [
-    "event",
-    "management",
+    "events",
+    "event bus",
     "typescript"
   ],
   "author": "Chris Yi",
@@ -20,5 +27,8 @@
   "bugs": {
     "url": "https://github.com/iamiota/kiwi-event/issues"
   },
-  "homepage": "https://github.com/iamiota/kiwi-event#readme"
+  "homepage": "https://github.com/iamiota/kiwi-event#readme",
+  "devDependencies": {
+    "microbundle": "^0.14.2"
+  }
 }
