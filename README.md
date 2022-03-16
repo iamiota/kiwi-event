@@ -25,7 +25,7 @@ yarn add kiwi-event
 ```typescript
 import KiwiEvent from 'kiwi-event'
 
-const $bus = new KiwiEvent()
+const $bus = KiwiEvent()
 
 // Register multiple listeners for an event
 const listener1 = $bus.on('hello world', () => {
@@ -67,7 +67,7 @@ $bus.clear()
 - 'event': an event name.
 - 'handler': a callback function.
 
-Register for an event, the return value is a unique key, you could use the ```off``` method to cancel the monitor
+Register for an event, the return value is a unique key, you could use the ```off``` method to cancel the listener
 
 ***
 
