@@ -62,7 +62,7 @@ function KiwiEvent() {
           eventMap.delete(targetEventKey)
         } else {
           const event = keyMap.get(targetEventKey)
-          if (!event) return
+          if (!event) continue
           const eventKeys = eventMap.get(event)
           eventKeys.splice(
             eventKeys.findIndex((item) => item === targetEventKey),
